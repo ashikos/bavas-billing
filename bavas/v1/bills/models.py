@@ -4,7 +4,8 @@ from django.db import models
 
 class Bill(models.Model):
 
-    """Model to store details of bills and create pdf
+    """
+    Model to store details of bills and create pdf
     """
 
     customer = models.CharField(
@@ -22,7 +23,7 @@ class Bill(models.Model):
 
 class Item(models.Model):
     """Model to store items in bill"""
-    sale = models.ForeignKey(
+    bill = models.ForeignKey(
         Bill, on_delete=models.CASCADE, null=True, blank=True,
             related_name="items")
     item = models.CharField(max_length=200, null=True, blank=True)
@@ -54,6 +55,11 @@ class Entries(models.Model):
     def __str__(self):
         return f'{self.id} - {self.vehicle} - {self.reg_no}'
 
+
+class Customer(models.Model):
+
+    contact = models.CharField(max_length=200, null=True, blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
 
 
 

@@ -8,7 +8,7 @@ class SaleAdmin(admin.ModelAdmin):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('sale', 'amount', "item")
+    list_display = ('bill', 'amount', "item")
 
 
 class ServiceAdmin(admin.ModelAdmin):

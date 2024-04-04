@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bavas bill</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    body{
+        padding: 0;
+        font-family: "font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;";
+        
+    }
+    .header{
+        margin-top: -60px;
+        text-align: center;
+        
+    }
+    .header h1 {
+       font-size: larger;
+    }
+    th, td {
+      height: 25px;
+    }
+
+    td p {
+      margin-top: -15px;
+    }
+
+    .custom-td{
+      font-weight: bolder;
+      
+    }
+
+    .custom-td p{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    
+    
+</style>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="">
+                <h4 style="font-weight: 700;">BAVAS CARWASH & POLUTTION CENTER</h4>
+            <p style="font-size: small; margin-top: -10px; ">TKS Puram , Kottapuram PO, Kodungallur, 9037583733 </p>
+            <h6 style="text-decoration: underline; padding: 0; margin-top: -6px;">TAX INVOICE</h6>
+            </div>
+            <div style="font-size: small; display: flex; justify-content: space-between; margin-top: -30px;">
+                <div>
+                    <p>Bill to : {{data.bill.customer}}</p>
+                </div>
+                <div >
+                    <p style="margin-bottom: -5px;">Invoice no: 725</p>
+                    <p>Date: {{data.bill.date}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+          <table class="table table-bordered">
+            <thead style="background-color: rgb(174, 135, 242);">
+              <tr>
+                <th scope="row">#</th>
+                <th scope="col">Item</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for  item in data.items %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ item.item }}</td>
+                <td>1</td>
+                <td>{{ item.amount }}</td>
+              </tr>
+              {% endfor %}
+             
+              <tr rowspan="2">
+                <td colspan="2" style="padding-top: 30px;" >
+                  <p>Innvoice amount in words : Five Hundred ruppes only</p>
+                  <p> Bank Details</h3>
+                  <p> Bank name: <span>SOUTH INDIAN BANK KODUNGALLUR</span></p>
+                  <p> Bank Account no: <span>0020073000010434</span></p>
+                  <p> Bank IFSC code: <span>SIBL0000020</span></p>
+                  <p> Account Holders name: <span>BAVAS POLUTTION TESTING CENTER</span></p>
+                </td>
+                <td colspan="2" class="custom-td" style="padding-top: 30px;">
+                  <p><span>total</span> <span> {{data.bill.amount}}</span></p>
+                  <p><span>Recevied</span> <span> {{data.bill.received}}</span></p>
+                  <p><span>Balance</span> <span> {{data.bill.balance}}</span></p>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.22.3/dist/bootstrap-table.min.js"></script>
+</body>
+</html>

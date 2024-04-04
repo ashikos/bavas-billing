@@ -1,8 +1,11 @@
-import  openpyxl
+import openpyxl
 import pandas as pd
+from django.http import HttpResponse
+from weasyprint import HTML
+import os
 
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -10,19 +13,25 @@ from datetime import datetime
 
 from v1.bills import models as bill_models
 from v1.bills import serializers as bill_serializers
+from v1.bills import utils
 
 from v1.bills.utils import Generate_bill_pdf
 from v1.bills.utils import Check_amount_type
 
 # from v1.accounts import permissions
-# Create your views here.
+from v1.bills import filters as bill_filters
+
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 
 class BillView(viewsets.ModelViewSet):
     """views for vendors"""
 
-    queryset = bill_models.Bill.objects.all()
+    queryset = bill_models.Bill.objects.all().order_by("-date", "id")
     serializer_class = bill_serializers.BillSerializer
+    filterset_class = bill_filters.BillFilter
 
 
 class ServiceView(viewsets.ModelViewSet):
@@ -32,25 +41,67 @@ class ServiceView(viewsets.ModelViewSet):
     serializer_class = bill_serializers.ServiceSerializer
 
 
+class CustomerView(viewsets.ModelViewSet):
+    """views for vendors"""
+
+    queryset = bill_models.Service.objects.all()
+    serializer_class = bill_serializers.CustomerSerializer
+
+
 class EntriesView(viewsets.ModelViewSet):
     """views for vendors"""
 
-    queryset = bill_models.Entries.objects.all()
+    queryset = bill_models.Entries.objects.all().order_by("-date", "id")
     serializer_class = bill_serializers.EntriesSerializer
-    # filterset_class = group_filter.GroupFilter
+    filterset_class = bill_filters.EntryFilter
+
+    # def list(self, request, *args, **kwargs):
+    #     queryset = self.filter_queryset(self.get_queryset())
+    #
+    #     if not queryset.exists():
+    #         return Response("No entries found",
+    #                         status=201)
+    #
+    #     page = self.paginate_queryset(queryset)
+    #     print(page)
+    #     if page is not None:
+    #         serializer = self.get_serializer(page, many=True)
+    #         print(serializer.data)
+    #         return self.get_paginated_response(serializer.data)
+
+        # serializer = self.get_serializer(queryset, many=True)
+        # return Response(serializer.data)
+
 
 
 class PDFView(APIView):
     """View for generating pdf bill"""
 
     def get(self, request, *args, **kwargs):
-
-        bill_id = 1
+        print(kwargs['id'])
+        bill_id = kwargs['id']
         bill = bill_models.Bill.objects.get(id=bill_id)
         items = bill.items.all()
 
+        serializer = bill_serializers.BillSerializer(bill)
+        print(serializer.data)
 
-        # return generate_bill_pdf
+        con_data = {
+            "bill": serializer.data,
+            "items": items
+        }
+
+        context = {"data": con_data}
+        template = render(request, TEMPLATES_DIR + '/temp.html', context)
+
+        pdf_document = HTML(string=template.content).render()
+
+        # Set the response content type and filename (optional)
+        response = HttpResponse(pdf_document.write_pdf(),
+                                content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename=report.pdf'
+
+        return response
 
 
 class ExcelView(APIView):
@@ -67,14 +118,18 @@ class ExcelView(APIView):
         data = self.request.data
         excel_file = data['excel']
         date = data['date']
+        print(date)
         date_object = datetime.strptime(date, "%d-%m-%Y").date()
         sheet_name = str(date_object.day)
-
-
+        print(sheet_name, excel_file)
         df = pd.read_excel(excel_file, sheet_name=sheet_name)
         df = df.where(pd.notnull(df), None)
 
         for row in range(1, 50):
+
+            if pd.isna(df.iloc[row, 0]):
+                break
+
             data = {
                 "reg_no": df.iloc[row, 1] if not pd.isna(
                     df.iloc[row, 1]) else None,
@@ -85,11 +140,12 @@ class ExcelView(APIView):
                 "service_type": df.iloc[row, 4] if not pd.isna(
                     df.iloc[row, 4]) else None,
             }
-            if any(value and not str(value).isspace() for value in data.values()):
-                print("element is : ", data)
-
+            print(data)
+            if any(value and not str(value).isspace() for value in
+                   data.values()):
                 entry, created = bill_models.Entries.objects.get_or_create(
-                    reg_no=data['reg_no'], date=date_object, contact=data['mob'])
+                    reg_no=data['reg_no'], date=date_object,
+                    contact=data['mob'])
 
                 entry.contact = data['mob']
                 entry.vehicle = data['vehicle']
@@ -104,9 +160,22 @@ class ExcelView(APIView):
                 entry.save()
                 ids = entry.id
                 ent = bill_models.Entries.objects.get(id=ids)
-                print(ent.vehicle, ent.id)
-
-
-
 
         return Response({"response": "all set"})
+
+
+class WashPerfomanceView(APIView):
+
+    def get(self, request):
+
+        msg = "hei this i the data"
+        year = 2024
+
+        type_wise = utils.get_collection_date()
+        monthly = utils.get_entry_graph_data(year)
+        data = {
+            "type_wise": type_wise,
+            "monthly": monthly,
+        }
+
+        return Response({"response": data})
