@@ -79,10 +79,11 @@ class CustomerFilter(filters.FilterSet):
 
     class Meta:
         """Meta info"""
-        model = Bill
+        model = Customer
         fields = "__all__"
 
     def search_filter(self, queryset, name, value):
 
-        queryset = queryset.filter(Q(name=value) | Q(contact=value))
+        queryset = queryset.filter(
+            Q(name__icontains=value) | Q(contact__icontains=value))
         return queryset

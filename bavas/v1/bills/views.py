@@ -8,6 +8,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
 
 from datetime import datetime
 
@@ -44,8 +45,9 @@ class ServiceView(viewsets.ModelViewSet):
 class CustomerView(viewsets.ModelViewSet):
     """views for vendors"""
 
-    queryset = bill_models.Service.objects.all()
+    queryset = bill_models.Customer.objects.all()
     serializer_class = bill_serializers.CustomerSerializer
+    filterset_class = bill_filters.CustomerFilter
 
 
 class EntriesView(viewsets.ModelViewSet):
@@ -73,18 +75,15 @@ class EntriesView(viewsets.ModelViewSet):
         # return Response(serializer.data)
 
 
-
 class PDFView(APIView):
     """View for generating pdf bill"""
 
     def get(self, request, *args, **kwargs):
-        print(kwargs['id'])
         bill_id = kwargs['id']
         bill = bill_models.Bill.objects.get(id=bill_id)
         items = bill.items.all()
 
         serializer = bill_serializers.BillSerializer(bill)
-        print(serializer.data)
 
         con_data = {
             "bill": serializer.data,
@@ -166,12 +165,11 @@ class ExcelView(APIView):
 
 class WashPerfomanceView(APIView):
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
 
-        msg = "hei this i the data"
-        year = 2024
+        year = self.request.query_params.get('year', None)
 
-        type_wise = utils.get_collection_date()
+        type_wise = utils.get_collection_date(year)
         monthly = utils.get_entry_graph_data(year)
         data = {
             "type_wise": type_wise,
@@ -179,3 +177,25 @@ class WashPerfomanceView(APIView):
         }
 
         return Response({"response": data})
+
+
+class LoginView(APIView):
+
+    def post(self, request):
+        username = request.data['username']
+        password = request.data['password']
+
+        if not username == 'ashik.os@cide.in':
+            raise AuthenticationFailed("Username Incorrect")
+        elif not password == '1234':
+            raise AuthenticationFailed("password incorrectt")
+        else:
+            message = "Successfully logged"
+
+        response = Response()
+
+        response.data = {
+            "message": message
+        }
+
+        return response

@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-@f#xw_plnvual(zz%g7^+h)u*tpoj9aive27duzw+$lt(cuytq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["13.201.86.127", "ec2-13-201-86-127.ap-south-1.compute.amazonaws.com"]
+ALLOWED_HOSTS = [
+    "0.0.0.0", "13.201.86.127",
+    "ec2-13-201-86-127.ap-south-1.compute.amazonaws.com"
+]
 
 
 # Application definition
@@ -58,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
++
     'corsheaders.middleware.CorsMiddleware',
 ]
 
@@ -169,7 +172,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

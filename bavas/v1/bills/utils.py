@@ -32,25 +32,38 @@ def Check_amount_type(df, row):
     return amount, gpay, is_credit_received
 
 
-def get_collection_date():
+def get_collection_date(year):
     """Function to get statics of Entries """
 
-    full = bill_models.Entries.objects.filter(type__istartswith="f").count()
-    body = bill_models.Entries.objects.filter(type__istartswith="b").count()
-    quick = bill_models.Entries.objects.filter(type__istartswith="Q").count()
-    wash = bill_models.Entries.objects.filter(type__istartswith="w").count()
-    others = bill_models.Entries.objects.filter(
+    full = bill_models.Entries.objects.filter(
+        date__year=year, type__istartswith="f").count()
+    body = bill_models.Entries.objects.filter(
+        date__year=year, type__istartswith="b").count()
+    quick = bill_models.Entries.objects.filter(
+        date__year=year, type__istartswith="Q").count()
+    wash = bill_models.Entries.objects.filter(
+        date__year=year, type__istartswith="w").count()
+    paint = bill_models.Entries.objects.filter(date__year=year).filter(
+        Q(type__icontains='coat') | Q(type__icontains='paint')
+    ).count()
+    exclude_list = ['F', 'B', 'Q', 'U', 'W']
+    others = bill_models.Entries.objects.filter(date__year=year).filter(
         ~Q(type__istartswith="f") & ~Q(type__istartswith="b")
-        & ~Q(type__istartswith="q") & ~Q(type__istartswith="w")).count()
+        & ~Q(type__istartswith="q") & ~Q(type__istartswith="w")
+        & ~Q(type__istartswith="u")
+    ).count()
+
+    # for i in others:
+    #     print(i.type)
 
     data = {
         "full": full,
         "body": body,
         "quick": quick,
         "wash": wash,
+        "paint": paint,
         "others": others
     }
-    print(data)
     return data
 
 

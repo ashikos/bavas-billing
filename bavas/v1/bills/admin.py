@@ -15,6 +15,10 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display = ('type', )
 
 
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'contact')
+
+
 class EntriesAdmin(admin.ModelAdmin):
     list_display = ('vehicle', 'reg_no', "amount", "gpay", "is_credit_received")
 
@@ -23,3 +27,4 @@ admin.site.register(Bill, SaleAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Entries, EntriesAdmin)
+admin.site.register(Customer, CustomerAdmin)
