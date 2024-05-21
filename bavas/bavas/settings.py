@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bavas',
 
     # requirements
     'corsheaders',
@@ -76,7 +77,7 @@ REST_FRAMEWORK = {
 
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'  # Replace with your React app's URL if different,
+    'http://localhost:3000',  # Replace with your React app's URL if different
     'http://ec2-3-109-211-186.ap-south-1.compute.amazonaws.com'
 ]
 
@@ -179,7 +180,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
