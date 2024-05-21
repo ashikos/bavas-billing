@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-@f#xw_plnvual(zz%g7^+h)u*tpoj9aive27duzw+$lt(cuytq
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "0.0.0.0", "13.201.86.127",
+    "0.0.0.0",
+    "13.201.86.127",
     "ec2-13-201-86-127.ap-south-1.compute.amazonaws.com"
 ]
 
@@ -74,10 +75,16 @@ REST_FRAMEWORK = {
 }
 
 
-#
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:3000'  # Replace with your React app's URL if different
-# ]
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000'  # Replace with your React app's URL if different,
+    'http://ec2-3-109-211-186.ap-south-1.compute.amazonaws.com'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://ec2-3-109-211-186.ap-south-1.compute.amazonaws.com',
+    'http://3.109.211.186'
+]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_METHODS = (
@@ -172,7 +179,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
