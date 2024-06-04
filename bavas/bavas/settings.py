@@ -29,7 +29,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "13.201.86.127",
-    "ec2-13-201-86-127.ap-south-1.compute.amazonaws.com"
+    "ec2-3-109-211-186.ap-south-1.compute.amazonaws.com",
+    'localhost:8000', '*'
 ]
 
 
@@ -83,6 +84,7 @@ CORS_ALLOWED_ORIGINS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
+    'http://localhost:8000',
     'http://ec2-3-109-211-186.ap-south-1.compute.amazonaws.com',
     'http://3.109.211.186'
 ]
