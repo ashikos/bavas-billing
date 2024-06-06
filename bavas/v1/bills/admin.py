@@ -20,7 +20,8 @@ class CustomerAdmin(admin.ModelAdmin):
 
 
 class EntriesAdmin(admin.ModelAdmin):
-    list_display = ('vehicle', 'reg_no', "amount", "gpay", "is_credit_received")
+    list_display = ('vehicle', 'reg_no', "amount", "gpay", 'date',
+                    "is_credit_received")
 
 
 admin.site.register(Bill, SaleAdmin)

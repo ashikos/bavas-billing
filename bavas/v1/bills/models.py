@@ -13,7 +13,7 @@ class Bill(models.Model):
     amount = models.FloatField(default=0)
     reg_no = models.CharField(max_length=50, null=True, blank=True)
     date = models.DateField(
-        default=datetime.date.today(), null=True, blank=True)
+        auto_now_add=True, null=True, blank=True)
     received = models.BooleanField(default=True)
     balance = models.FloatField(default=0)
 
@@ -47,7 +47,8 @@ class Entries(models.Model):
     amount = models.FloatField(default=0, null=True, blank=True)
     remark = models.CharField(max_length=200, null=True, blank=True)
     type = models.CharField(max_length=200, null=True, blank=True)
-    date = models.DateField(null=True, blank=True)
+    date = models.DateField(
+        auto_now_add=True, null=True, blank=True)
     gpay = models.FloatField(default=0, null=True, blank=True)
     is_credit = models.BooleanField(default=False)
     is_credit_received = models.BooleanField(default=False)
