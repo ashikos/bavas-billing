@@ -118,7 +118,7 @@ class ExcelView(APIView):
         excel_file = data['excel']
         date = data['date']
         print(date)
-        date_object = datetime.strptime(date, "%d-%m-%Y").date()
+        date_object = datetime.strptime(date, "%Y-%m-%d").date()
         sheet_name = str(date_object.day)
         print(sheet_name, excel_file)
         df = pd.read_excel(excel_file, sheet_name=sheet_name)
