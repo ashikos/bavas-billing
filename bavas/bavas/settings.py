@@ -79,14 +79,15 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',  # Replace with your React app's URL if different
-    'https://ec2-3-111-31-136.ap-south-1.compute.amazonaws.com'
+    'https://ec2-3-111-31-136.ap-south-1.compute.amazonaws.com',
+    'http://3.111.31.136'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
     'https://ec2-3-111-31-136.ap-south-1.compute.amazonaws.com',
-    'http://3.109.211.186'
+    'http://3.111.31.136'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
