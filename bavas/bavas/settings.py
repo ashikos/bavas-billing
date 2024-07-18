@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "13.201.86.127",
     "ec2-13-126-63-153.ap-south-1.compute.amazonaws.com",
-    'localhost:8000', '*', 'bavas-carwash-billing.netlify.app'
+    'localhost:8000', '*', 'bavas-carwash-billing.netlify.app',
 ]
 
 
@@ -79,7 +79,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://bavas-carwash-billing.netlify.app', # Replace with your React app's URL if different
+    'https://bavas-carwash-billing.netlify.app',
     'https://ec2-3-111-31-136.ap-south-1.compute.amazonaws.com',
     'http://3.111.31.136',
     'http://3.111.31.136', '*',
@@ -102,6 +102,18 @@ CORS_ALLOW_METHODS = (
     'PATCH',
     'DELETE',
     'OPTIONS'
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 )
 
 ROOT_URLCONF = 'bavas.urls'
