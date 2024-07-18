@@ -81,7 +81,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://bavas-carwash-billing.netlify.app', # Replace with your React app's URL if different
     'https://ec2-3-111-31-136.ap-south-1.compute.amazonaws.com',
-    'http://3.111.31.136'
+    'http://3.111.31.136',
+    'http://3.111.31.136',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -89,7 +90,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://bavas-carwash-billing.netlify.app',
     'http://localhost:8000',
     'https://ec2-3-111-31-136.ap-south-1.compute.amazonaws.com',
-    'http://3.111.31.136'
+    'http://3.111.31.136',
+    'https://3.111.31.136'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
