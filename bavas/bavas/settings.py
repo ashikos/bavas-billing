@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     "13.201.86.127",
     "ec2-13-126-63-153.ap-south-1.compute.amazonaws.com",
-    'localhost:8000', '*'
+    'localhost:8000', '*', 'bavas-carwash-billing.netlify.app'
 ]
 
 
