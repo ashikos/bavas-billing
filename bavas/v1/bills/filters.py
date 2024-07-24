@@ -28,15 +28,15 @@ class EntryFilter(filters.FilterSet):
 
     def date_filter(self, queryset, name, value):
         """Returns queyset with in range of start date and end date"""
-        print(23434343)
         start_date = self.request.query_params.get('start_date', None)
         end_date = self.request.query_params.get('end_date', None)
 
-        print(start_date, end_date)
-        # start_date = comm_lib.convert_str_to_datetime(start_date, '%d/%m/%Y')
-        # end_date = comm_lib.convert_str_to_datetime(end_date, '%d/%m/%Y')
-        queryset = queryset.filter(date__range=(start_date, end_date))
-
+        if start_date and not end_date:
+            queryset = queryset.filter(date__gte=start_date)
+        elif end_date and not start_date:
+            queryset = queryset.filter(date__lte=end_date)
+        else:
+            queryset = queryset.filter(date__range=(start_date, end_date))
         return queryset
 
 
@@ -66,10 +66,12 @@ class BillFilter(filters.FilterSet):
         start_date = self.request.query_params.get('start_date', None)
         end_date = self.request.query_params.get('end_date', None)
 
-        # start_date = comm_lib.convert_str_to_datetime(start_date, '%d/%m/%Y')
-        # end_date = comm_lib.convert_str_to_datetime(end_date, '%d/%m/%Y')
-        queryset = queryset.filter(date__range=(start_date, end_date))
-
+        if start_date and not end_date:
+            queryset = queryset.filter(date__gte=start_date)
+        elif end_date and not start_date:
+            queryset = queryset.filter(date__lte=end_date)
+        else:
+            queryset = queryset.filter(date__range=(start_date, end_date))
         return queryset
 
 
@@ -83,7 +85,6 @@ class CustomerFilter(filters.FilterSet):
         fields = "__all__"
 
     def search_filter(self, queryset, name, value):
-
         queryset = queryset.filter(
             Q(name__icontains=value) | Q(contact__icontains=value))
         return queryset

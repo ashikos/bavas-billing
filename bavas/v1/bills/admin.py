@@ -26,6 +26,6 @@ class EntriesAdmin(admin.ModelAdmin):
 
 admin.site.register(Bill, SaleAdmin)
 admin.site.register(Item, ItemAdmin)
-admin.site.register(Service, ServiceAdmin)
+# admin.site.register(Service, ServiceAdmin)
 admin.site.register(Entries, EntriesAdmin)
 admin.site.register(Customer, CustomerAdmin)
