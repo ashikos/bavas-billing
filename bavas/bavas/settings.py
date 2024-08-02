@@ -28,8 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
-    "13.201.86.127",
-    "ec2-13-126-63-153.ap-south-1.compute.amazonaws.com",
+    "52.66.250.182",
+    "ec2-52-66-250-182.ap-south-1.compute.amazonaws.com",
     'localhost:8000', '*', 'bavas-carwash-billing.netlify.app',
 ]
 
@@ -90,8 +90,9 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
     'https://bavas-carwash-billing.netlify.app',
     'http://localhost:8000',
-    'https://ec2-3-111-31-136.ap-south-1.compute.amazonaws.com',
-    'http://3.111.31.136',
+    'https://ec2-52-66-250-182.ap-south-1.compute.amazonaws.com',
+    'http://ec2-52-66-250-182.ap-south-1.compute.amazonaws.com',
+    'http://52.66.250.182',
     'https://3.111.31.136',
 ]
 

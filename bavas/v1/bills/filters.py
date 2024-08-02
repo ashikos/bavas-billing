@@ -23,7 +23,7 @@ class EntryFilter(filters.FilterSet):
             F('reg_no'), Value(' '), Value(''), function='REPLACE',
             output_field=CharField()
         )).filter(
-            Q(vehicle__icontains=value) | Q(reg__icontains=value))
+            Q(vehicle__icontains=value) | Q(reg__icontains=value)| Q(contact__icontains=value))
         return queryset
 
     def date_filter(self, queryset, name, value):

@@ -3,6 +3,7 @@ import pandas as pd
 from django.http import HttpResponse
 from weasyprint import HTML
 import os
+from django.db import transaction
 
 from django.shortcuts import render
 from rest_framework import viewsets, generics
@@ -15,6 +16,7 @@ from datetime import datetime
 from v1.bills import models as bill_models
 from v1.bills import serializers as bill_serializers
 from v1.bills import utils
+from common.exceptions import Bad_Request
 
 from v1.bills.utils import Generate_bill_pdf
 from v1.bills.utils import Check_amount_type
@@ -71,8 +73,8 @@ class EntriesView(viewsets.ModelViewSet):
     #         print(serializer.data)
     #         return self.get_paginated_response(serializer.data)
 
-        # serializer = self.get_serializer(queryset, many=True)
-        # return Response(serializer.data)
+    # serializer = self.get_serializer(queryset, many=True)
+    # return Response(serializer.data)
 
 
 class PDFView(APIView):
@@ -117,10 +119,11 @@ class ExcelView(APIView):
         data = self.request.data
         excel_file = data['excel']
         date = data['date']
-        print(date)
+
+        # try:
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
         sheet_name = str(date_object.day)
-        print(sheet_name, excel_file)
+
         df = pd.read_excel(excel_file, sheet_name=sheet_name)
         df = df.where(pd.notnull(df), None)
 
@@ -139,18 +142,19 @@ class ExcelView(APIView):
                 "service_type": df.iloc[row, 4] if not pd.isna(
                     df.iloc[row, 4]) else None,
             }
-            print(data)
+            print('data', data)
             if any(value and not str(value).isspace() for value in
                    data.values()):
                 entry, created = bill_models.Entries.objects.get_or_create(
                     reg_no=data['reg_no'], date=date_object,
                     contact=data['mob'])
 
-                entry.contact = data['mob']
                 entry.vehicle = data['vehicle']
                 entry.type = data['service_type']
 
-                amount, gpay, is_credit_received = Check_amount_type(df, row)
+                amount, gpay, is_credit_received = Check_amount_type(
+                    df, row)
+                print('amiont', amount, gpay)
                 entry.amount = amount
                 entry.gpay = gpay
                 entry.is_credit_received = is_credit_received
@@ -159,14 +163,15 @@ class ExcelView(APIView):
                 entry.save()
                 ids = entry.id
                 ent = bill_models.Entries.objects.get(id=ids)
+        # except:
+        #     raise Bad_Request("Invalid excel uploded")
 
-        return Response({"response": "all set"})
+        return Response("excel uploaded succesfully")
 
 
 class WashPerfomanceView(APIView):
 
     def get(self, request, *args, **kwargs):
-
         year = self.request.query_params.get('year', None)
 
         type_wise = utils.get_collection_date(year)
