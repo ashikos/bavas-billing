@@ -29,9 +29,9 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "65.2.75.172",
-    'https://ashplus.online', 'ashplus.online',
+    'ashplus.online', 'www.ashplus.online',
     "ec2-65-2-75-172.ap-south-1.compute.amazonaws.com",
-    'localhost:8000', '*', 'bavas-carwash-billing.netlify.app',
+    'localhost:8000', 'bavas-carwash-billing.netlify.app', '*'
 ]
 
 
@@ -78,11 +78,10 @@ REST_FRAMEWORK = {
 
 }
 
-
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://bavas-carwash-billing.netlify.app',
-    'https://ashplus.online', 'ashplus.online',
+    'https://ashplus.online', 'https://www.ashplus.online',
     'https://ec2-65-2-75-172.ap-south-1.compute.amazonaws.com',
     'http://65.2.75.172',
     'https://65.2.75.172',
@@ -94,13 +93,13 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'https://ec2-65-2-75-172.ap-south-1.compute.amazonaws.com',
     'http://ec2-65-2-75-172.ap-south-1.compute.amazonaws.com',
-    'ashplus.online',
+    'https://ashplus.online',
+    'https://www.ashplus.online',
+    'http://65.2.75.172',
     'https://65.2.75.172',
-    "https://ashplus.online",
-    "https://www.ashplus.online",
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_METHODS = (
     'GET',
     'POST',
