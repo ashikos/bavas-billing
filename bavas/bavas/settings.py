@@ -81,7 +81,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'https://bavas-carwash-billing.netlify.app',
-    'https://ec2-3-111-31-136.ap-south-1.compute.amazonaws.com',
+    'https://ec2-52-66-250-182.ap-south-1.compute.amazonaws.com',
     'http://3.111.31.136',
     'http://3.111.31.136',
 ]
