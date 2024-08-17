@@ -7,14 +7,21 @@ from common import library as comm_lib
 
 class EntryFilter(filters.FilterSet):
     """filtering Entries"""
+    year = filters.CharFilter(method='year_filter')
     search = filters.CharFilter(method='search_filter')
     start_date = filters.CharFilter(method='date_filter')
-    year = filters.CharFilter(method='year_filter')
 
     class Meta:
         """Meta info"""
         model = Entries
         fields = "__all__"
+
+    def year_filter(self, queryset, name, value):
+        """Returns queyset with in range of start date and end date"""
+        if value:
+            queryset = queryset.filter(date__year=value)
+
+        return queryset
 
     def search_filter(self, queryset, name, value):
 
@@ -38,13 +45,6 @@ class EntryFilter(filters.FilterSet):
             queryset = queryset.filter(date__lte=end_date)
         else:
             queryset = queryset.filter(date__range=(start_date, end_date))
-        return queryset
-
-    def year_filter(self, queryset, name, value):
-        """Returns queyset with in range of start date and end date"""
-        if value:
-            queryset = queryset.filter(date__year=value)
-
         return queryset
 
 
