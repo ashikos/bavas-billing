@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from pygments.lexer import default
 
 
 class Bill(models.Model):
@@ -12,8 +13,7 @@ class Bill(models.Model):
         max_length=200, default="", null=True, blank=True)
     amount = models.FloatField(default=0)
     reg_no = models.CharField(max_length=50, null=True, blank=True)
-    date = models.DateField(
-        auto_now_add=True, null=True, blank=True)
+    date = models.DateField(default=datetime.date.today, null=True, blank=True)
     received = models.BooleanField(default=True)
     balance = models.FloatField(default=0)
 

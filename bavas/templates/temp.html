@@ -51,11 +51,12 @@
             <h6 style="text-decoration: underline; padding: 0; margin-top: -6px;">TAX INVOICE</h6>
             </div>
             <div style="font-size: small; display: flex; justify-content: space-between; margin-top: -30px;">
-                <div>
-                    <p>Bill to : {{data.bill.customer}}</p>
+                <div style="text-align: left;">
+                    <p style="margin-bottom: -5px;">Bill to : {{data.bill.customer}}</p>
+                    <p>Reg no : {{data.bill.reg_no}}</p>
                 </div>
                 <div >
-                    <p style="margin-bottom: -5px;">Invoice no: 725</p>
+                    <p style="margin-bottom: -5px;">Invoice no: {{data.bill.id}}</p>
                     <p>Date: {{data.bill.date}}</p>
                 </div>
             </div>
@@ -82,7 +83,7 @@
              
               <tr rowspan="2">
                 <td colspan="2" style="padding-top: 30px;" >
-                  <p>Innvoice amount in words : Five Hundred ruppes only</p>
+                  <p>Innvoice amount in words : </p>
                   <p> Bank Details</h3>
                   <p> Bank name: <span>SOUTH INDIAN BANK KODUNGALLUR</span></p>
                   <p> Bank Account no: <span>0020073000010434</span></p>

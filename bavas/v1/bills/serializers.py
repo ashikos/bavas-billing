@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from v1.bills import models as bill_model
+from datetime import date
 from common import library as comm_libs
 
 
@@ -13,6 +14,9 @@ class ItemSerializer(serializers.ModelSerializer):
 
 class BillSerializer(serializers.ModelSerializer):
     items = ItemSerializer(many=True, required=False)
+    date = serializers.DateField(
+        format="%Y-%m-%d", input_formats=["%Y-%m-%d"],
+        allow_null=True, default=date.today)
 
     class Meta:
         model = bill_model.Bill
