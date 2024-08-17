@@ -30,12 +30,6 @@ class Item(models.Model):
     amount = models.FloatField(default=0)
 
 
-class Service(models.Model):
-    """Service provided"""
-    type = models.CharField(max_length=200, null=True, blank=True)
-
-    def __str__(self):
-        return f'{self.id} - {self.type}'
 
 
 class Entries(models.Model):

@@ -37,13 +37,6 @@ class BillView(viewsets.ModelViewSet):
     filterset_class = bill_filters.BillFilter
 
 
-class ServiceView(viewsets.ModelViewSet):
-    """views for vendors"""
-
-    queryset = bill_models.Service.objects.all()
-    serializer_class = bill_serializers.ServiceSerializer
-
-
 class CustomerView(viewsets.ModelViewSet):
     """views for vendors"""
 

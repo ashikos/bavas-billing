@@ -1,6 +1,7 @@
 from django.contrib import admin
 from v1.bills.models import *
 
+
 # Register your models here.
 
 class SaleAdmin(admin.ModelAdmin):
@@ -9,10 +10,6 @@ class SaleAdmin(admin.ModelAdmin):
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('bill', 'amount', "item")
-
-
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('type', )
 
 
 class CustomerAdmin(admin.ModelAdmin):
@@ -26,6 +23,5 @@ class EntriesAdmin(admin.ModelAdmin):
 
 admin.site.register(Bill, SaleAdmin)
 admin.site.register(Item, ItemAdmin)
-# admin.site.register(Service, ServiceAdmin)
 admin.site.register(Entries, EntriesAdmin)
 admin.site.register(Customer, CustomerAdmin)

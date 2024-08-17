@@ -59,13 +59,6 @@ class BillSerializer(serializers.ModelSerializer):
 
         return bill
 
-
-class ServiceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = bill_model.Service
-        fields = "__all__"
-
-
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = bill_model.Customer
