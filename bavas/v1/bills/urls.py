@@ -16,8 +16,8 @@ urlpatterns = [
     path('billtopdf/<int:id>/', views.PDFView.as_view(), name='pdf'),
     path('excel/', views.ExcelView.as_view()),
     path('perfomance/', views.WashPerfomanceView.as_view()),
-    path('login/', views.GoogleLogin .as_view()),
-    path('google-login/', views.GoogleLogin .as_view()),
+    # path('login/', views.GoogleLogin .as_view()),
+    # path('google-login/', views.GoogleLogin .as_view()),
 ]
 
 urlpatterns += router.urls
