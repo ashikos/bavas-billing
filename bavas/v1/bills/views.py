@@ -28,6 +28,12 @@ BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
+# from google.oauth2 import id_token
+# from google.auth.transport import requests
+# from django.contrib.auth.models import User
+# from django.http import JsonResponse
+# from rest_framework.decorators import api_view
+
 
 class BillView(viewsets.ModelViewSet):
     """views for vendors"""
@@ -135,7 +141,6 @@ class ExcelView(APIView):
                 "service_type": df.iloc[row, 4] if not pd.isna(
                     df.iloc[row, 4]) else None,
             }
-            print('data', data)
             if any(value and not str(value).isspace() for value in
                    data.values()):
                 entry, created = bill_models.Entries.objects.get_or_create(
@@ -177,23 +182,23 @@ class WashPerfomanceView(APIView):
         return Response({"response": data})
 
 
-class LoginView(APIView):
-
-    def post(self, request):
-        username = request.data['username']
-        password = request.data['password']
-
-        if not username == 'ashik.os@cide.in':
-            raise AuthenticationFailed("Username Incorrect")
-        elif not password == '1234':
-            raise AuthenticationFailed("password incorrectt")
-        else:
-            message = "Successfully logged"
-
-        response = Response()
-
-        response.data = {
-            "message": message
-        }
-
-        return response
+# class LoginView(APIView):
+#
+#     def post(self, request):
+#         username = request.data['username']
+#         password = request.data['password']
+#
+#         if not username == 'ashik.os@cide.in':
+#             raise AuthenticationFailed("Username Incorrect")
+#         elif not password == '1234':
+#             raise AuthenticationFailed("password incorrectt")
+#         else:
+#             message = "Successfully logged"
+#
+#         response = Response()
+#
+#         response.data = {
+#             "message": message
+#         }
+#
+#         return response
