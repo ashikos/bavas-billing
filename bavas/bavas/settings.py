@@ -94,7 +94,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://ec2-65-2-75-172.ap-south-1.compute.amazonaws.com',
     'http://ec2-65-2-75-172.ap-south-1.compute.amazonaws.com',
     'https://ashplus.online',
-    'https://www.ashplus.online',
+    'https://bavas.ashplus.online',
     'http://65.2.75.172',
     'https://65.2.75.172',
 ]
