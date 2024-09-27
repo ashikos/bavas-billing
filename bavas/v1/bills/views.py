@@ -47,7 +47,7 @@ class BillView(viewsets.ModelViewSet):
 class CustomerView(viewsets.ModelViewSet):
     """views for vendors"""
 
-    queryset = bill_models.Customer.objects.all()
+    queryset = bill_models.Customer.objects.all().order_by("-id")
     serializer_class = bill_serializers.CustomerSerializer
     filterset_class = bill_filters.CustomerFilter
 
