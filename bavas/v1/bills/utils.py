@@ -27,8 +27,6 @@ def Check_amount_type(df, row):
         gpay = None if pd.isna(df.iloc[row, 11]) else df.iloc[row, 11]
         is_credit_received = True
 
-    print(amount, gpay, is_credit_received)
-
     return amount, gpay, is_credit_received
 
 

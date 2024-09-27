@@ -17,6 +17,7 @@ from v1.bills import models as bill_models
 from v1.bills import serializers as bill_serializers
 from v1.bills import utils
 from common.exceptions import Bad_Request
+from v1.bills.constants import MONTH_ATTRS
 
 from v1.bills.utils import Generate_bill_pdf
 from v1.bills.utils import Check_amount_type
@@ -117,56 +118,56 @@ class ExcelView(APIView):
 
         data = self.request.data
         excel_file = data['excel']
-        # date = data['date']
+        date = data['date']
+        year, month = date.split('-')
 
-        for day in range(1,28):
-            print('==============')
-            print(day)
-            date = f'2024-02-{day}'
-            # try:
-            date_object = datetime.strptime(date, "%Y-%m-%d").date()
-            sheet_name = str(date_object.day)
+        for day in range(1, MONTH_ATTRS[month][0]):
+            date = f'{year}-{month}-{day}'
+            print(date)
+            try:
+                date_object = datetime.strptime(date, "%Y-%m-%d").date()
+                sheet_name = str(date_object.day)
 
-            df = pd.read_excel(excel_file, sheet_name=sheet_name)
-            df = df.where(pd.notnull(df), None)
 
-            for row in range(1, 50):
+                df = pd.read_excel(excel_file, sheet_name=sheet_name)
+                df = df.where(pd.notnull(df), None)
 
-                if pd.isna(df.iloc[row, 0]):
-                    break
+                for row in range(1, 50):
 
-                data = {
-                    "reg_no": df.iloc[row, 1] if not pd.isna(
-                        df.iloc[row, 1]) else None,
-                    "mob": df.iloc[row, 2] if not pd.isna(
-                        df.iloc[row, 2]) else None,
-                    "vehicle": df.iloc[row, 3] if not pd.isna(
-                        df.iloc[row, 3]) else None,
-                    "service_type": df.iloc[row, 4] if not pd.isna(
-                        df.iloc[row, 4]) else None,
-                }
-                if any(value and not str(value).isspace() for value in
-                       data.values()):
-                    entry, created = bill_models.Entries.objects.get_or_create(
-                        reg_no=data['reg_no'], date=date_object,
-                        contact=data['mob'])
+                    if pd.isna(df.iloc[row, 0]):
+                        break
 
-                    entry.vehicle = data['vehicle']
-                    entry.type = data['service_type']
+                    data = {
+                        "reg_no": df.iloc[row, 1] if not pd.isna(
+                            df.iloc[row, 1]) else None,
+                        "mob": df.iloc[row, 2] if not pd.isna(
+                            df.iloc[row, 2]) else None,
+                        "vehicle": df.iloc[row, 3] if not pd.isna(
+                            df.iloc[row, 3]) else None,
+                        "service_type": df.iloc[row, 4] if not pd.isna(
+                            df.iloc[row, 4]) else None,
+                    }
+                    if any(value and not str(value).isspace() for value in
+                           data.values()):
+                        entry, created = bill_models.Entries.objects.get_or_create(
+                            reg_no=data['reg_no'], date=date_object,
+                            contact=data['mob'])
 
-                    amount, gpay, is_credit_received = Check_amount_type(
-                        df, row)
-                    print('amiont', amount, gpay)
-                    entry.amount = amount
-                    entry.gpay = gpay
-                    entry.is_credit_received = is_credit_received
-                    entry.date = date_object
+                        entry.vehicle = data['vehicle']
+                        entry.type = data['service_type']
 
-                    entry.save()
-                    ids = entry.id
-                    ent = bill_models.Entries.objects.get(id=ids)
-            # except:
-            #     raise Bad_Request("Invalid excel uploded")
+                        amount, gpay, is_credit_received = Check_amount_type(
+                            df, row)
+                        entry.amount = amount
+                        entry.gpay = gpay
+                        entry.is_credit_received = is_credit_received
+                        entry.date = date_object
+
+                        entry.save()
+                        ids = entry.id
+                        ent = bill_models.Entries.objects.get(id=ids)
+            except:
+                raise Bad_Request("Invalid excel uploded")
 
         return Response("excel uploaded succesfully")
 
