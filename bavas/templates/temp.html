@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>bavas bill</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
 </head>
 <style>
     body{
@@ -12,7 +12,7 @@
         
     }
     .header{
-        margin-top: -60px;
+        margin-top: 60px;
         text-align: center;
         
     }
@@ -38,6 +38,20 @@
       align-items: center;
     }
 
+    .container {
+      margin-top: 100px;
+    }
+
+    .custom-table-header {
+    background-color:  red;
+    color: black;
+    height:10px;
+}
+
+    .custom-tr{
+    background-color:  rgb(174, 135, 242);
+    height:50px;
+    }
     
     
 </style>
@@ -45,12 +59,17 @@
 
     <div class="container">
         <div class="header">
-            <div class="">
-                <h4 style="font-weight: 700;">BAVAS CARWASH & POLUTTION CENTER</h4>
-            <p style="font-size: small; margin-top: -10px; ">TKS Puram , Kottapuram PO, Kodungallur, 9037583733 </p>
-            <h6 style="text-decoration: underline; padding: 0; margin-top: -6px;">TAX INVOICE</h6>
+            <div class="" style="display: flex; flex-direction: row;">
+              <div class="" style=" width: 250px;">
+                <img src="" alt="">
+              </div>
+                <div class="">
+                  <h4 style="font-weight: 700;">BAVAS CARWASH & POLUTTION CENTER</h4>
+                  <p style="font-size: small; margin-top: -10px; ">TKS Puram , Kottapuram PO, Kodungallur, 9037583733 </p>
+                  <h6 style="text-decoration: underline; padding: 0; margin-top: -6px;">TAX INVOICE</h6>
+                </div>
             </div>
-            <div style="font-size: small; display: flex; justify-content: space-between; margin-top: -30px;">
+            <div style="font-size: small; display: flex; justify-content: space-between;">
                 <div style="text-align: left;">
                     <p style="margin-bottom: -5px;">Bill to : {{data.bill.customer}}</p>
                     <p>Reg no : {{data.bill.reg_no}}</p>
@@ -62,19 +81,19 @@
             </div>
         </div>
         <div class="section">
-          <table class="table table-bordered">
-            <thead style="background-color: rgb(174, 135, 242);">
-              <tr>
-                <th scope="row">#</th>
-                <th scope="col">Item</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Price</th>
+          <table class="">
+            <thead  class="custom-table-header">
+              <tr class="custom-tr">
+                <th style="width: 10%;" scope="row">#</th>
+                <th style="" scope="col">Item</th>
+                <th style="" scope="col">Qty</th>
+                <th style="" scope="col">Price</th>
               </tr>
             </thead>
             <tbody>
               {% for  item in data.items %}
               <tr>
-                <th scope="row">{{ forloop.counter }}</th>
+                <th scope="row">{{ forloop.counter }} .</th>
                 <td>{{ item.item }}</td>
                 <td>1</td>
                 <td>{{ item.amount }}</td>
@@ -82,9 +101,9 @@
               {% endfor %}
              
               <tr rowspan="2">
-                <td colspan="2" style="padding-top: 30px;" >
+                <td colspan="2" style="padding-top: 50px;" >
                   <p>Innvoice amount in words : </p>
-                  <p> Bank Details</h3>
+                  <p> Bank Details </p>
                   <p> Bank name: <span>SOUTH INDIAN BANK KODUNGALLUR.</span></p>
                   <p> Bank Account no: <span>0020073000010434</span></p>
                   <p> Bank IFSC code: <span>SIBL0000020</span></p>

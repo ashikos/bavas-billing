@@ -1,7 +1,13 @@
-
+import os
 import pandas as pd
 from v1.bills import models as bill_models
 from django.db.models import Q
+from django.http import HttpResponse
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
+from django.shortcuts import render
 
 def Generate_bill_pdf(request, sponsors):
     """Function to Generate Sponsor logos pdf"""
@@ -79,6 +85,24 @@ def get_entry_graph_data(year=None):
     return coordinates
 
 
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+import pdfkit
+
+def generate_pdf( template, context):
+    # Render the template with context data
+
+    html = render_to_string(template, context)
+
+    config = pdfkit.configuration(wkhtmltopdf='/usr/bin/wkhtmltopdf')  # Adjust path if needed
+
+    # Generate PDF
+    pdf = pdfkit.from_string(html, False, configuration=config)
+
+    # Return as response
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="example.pdf"'
+    return response
 
 
 

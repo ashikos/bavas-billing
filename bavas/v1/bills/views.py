@@ -1,15 +1,12 @@
-import openpyxl
 import pandas as pd
 from django.http import HttpResponse
 from weasyprint import HTML
 import os
-from django.db import transaction
 
 from django.shortcuts import render
-from rest_framework import viewsets, generics
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed
 
 from datetime import datetime
 
@@ -18,22 +15,15 @@ from v1.bills import serializers as bill_serializers
 from v1.bills import utils
 from common.exceptions import Bad_Request
 from v1.bills.constants import MONTH_ATTRS
+from v1.bills.utils import generate_pdf
 
-from v1.bills.utils import Generate_bill_pdf
 from v1.bills.utils import Check_amount_type
 
-# from v1.accounts import permissions
 from v1.bills import filters as bill_filters
 
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
-
-# from google.oauth2 import id_token
-# from google.auth.transport import requests
-# from django.contrib.auth.models import User
-# from django.http import JsonResponse
-# from rest_framework.decorators import api_view
 
 
 class BillView(viewsets.ModelViewSet):
@@ -87,20 +77,15 @@ class PDFView(APIView):
 
         serializer = bill_serializers.BillSerializer(bill)
 
+        template = TEMPLATES_DIR + '/temp.html'
+
         con_data = {
             "bill": serializer.data,
             "items": items
         }
-
         context = {"data": con_data}
-        template = render(request, TEMPLATES_DIR + '/temp.html', context)
 
-        pdf_document = HTML(string=template.content).render()
-
-        # Set the response content type and filename (optional)
-        response = HttpResponse(pdf_document.write_pdf(),
-                                content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=report.pdf'
+        response = generate_pdf( template, context)
 
         return response
 
