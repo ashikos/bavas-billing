@@ -118,6 +118,7 @@ class ExcelView(APIView):
                 df = df.where(pd.notnull(df), None)
 
                 for row in range(1, 50):
+                    print("row:" , row)
 
                     if pd.isna(df.iloc[row, 0]):
                         break
@@ -152,7 +153,7 @@ class ExcelView(APIView):
                         ids = entry.id
                         ent = bill_models.Entries.objects.get(id=ids)
             except:
-                raise Bad_Request("Invalid excel uploded")
+                raise Bad_Request(f"Invalid excel uploded, Error on day:{day} row: {row}")
 
         return Response("excel uploaded succesfully")
 
