@@ -29,6 +29,10 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "65.2.75.172",
+    'http://bavascarwash.ashplus.online',
+    'bavascarwash.ashplus.online',
+    'ec2-65-1-134-172.ap-south-1.compute.amazonaws.com',
+    '65.1.134.172',
     'ashplus.online', 'www.ashplus.online',
     "ec2-65-2-75-172.ap-south-1.compute.amazonaws.com",
     'localhost:8000', 'bavas-carwash-billing.netlify.app', '*'
@@ -46,17 +50,41 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bavas',
 
+    # Google Auth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
     # requirements
     'corsheaders',
     'rest_framework',
     'django_filters',
     'rest_framework_swagger',
     'django_extensions',
+    'django_celery_results',
 
     #apps
     'v1.bills',
     'v1.accounts',
 ]
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'APP': {
+            'client_id': '74542906845-7v2evjbbt8s2qf832kibg4e52nb0uvvd.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,6 +95,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -211,6 +240,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+# AUTH_USER_MODEL = 'master_data.UserMaster'
+
 # STATIC_DIR=os.path.join(BASE_DIR,'static')
 #
 # STATIC_URL = '/static/'
@@ -220,3 +251,15 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+
+CELERY_RESULT_BACKEND = 'django-db'
+
+

@@ -1,9 +1,7 @@
 import pandas as pd
 from django.http import HttpResponse
-from weasyprint import HTML
 import os
 
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,6 +13,7 @@ from v1.bills import serializers as bill_serializers
 from v1.bills import utils
 from common.exceptions import Bad_Request
 from v1.bills.constants import MONTH_ATTRS
+from v1.bills.task import test_func
 from v1.bills.utils import generate_pdf
 
 from v1.bills.utils import Check_amount_type
@@ -48,23 +47,6 @@ class EntriesView(viewsets.ModelViewSet):
     queryset = bill_models.Entries.objects.all().order_by("-date", "id")
     serializer_class = bill_serializers.EntriesSerializer
     filterset_class = bill_filters.EntryFilter
-
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #
-    #     if not queryset.exists():
-    #         return Response("No entries found",
-    #                         status=201)
-    #
-    #     page = self.paginate_queryset(queryset)
-    #     print(page)
-    #     if page is not None:
-    #         serializer = self.get_serializer(page, many=True)
-    #         print(serializer.data)
-    #         return self.get_paginated_response(serializer.data)
-
-    # serializer = self.get_serializer(queryset, many=True)
-    # return Response(serializer.data)
 
 
 class PDFView(APIView):
@@ -107,7 +89,7 @@ class ExcelView(APIView):
         year, month = date.split('-')
 
         for day in range(1, MONTH_ATTRS[month][0]):
-            date = f'{year}-{month}-{day}'
+            date = f"{year}-{month}-{day}"
             print(date)
             try:
                 date_object = datetime.strptime(date, "%Y-%m-%d").date()
@@ -193,3 +175,9 @@ class WashPerfomanceView(APIView):
 #         }
 #
 #         return response
+
+
+def TestView(request):
+    test_func.delay()
+    return HttpResponse("Donnneee")
+
