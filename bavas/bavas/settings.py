@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "0.0.0.0",
     "65.2.75.172",
+    "15.206.90.190",
     'http://bavascarwash.ashplus.online',
     'bavascarwash.ashplus.online',
     'ec2-65-1-134-172.ap-south-1.compute.amazonaws.com',
