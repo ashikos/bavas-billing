@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
     'ashplus.online', 'www.ashplus.online',
     "ec2-65-2-75-172.ap-south-1.compute.amazonaws.com",
     'localhost:8000', 'bavas-carwash-billing.netlify.app', '*'
+    'ec2-15-206-90-190.ap-south-1.compute.amazonaws.com'
 ]
 
 
