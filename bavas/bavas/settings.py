@@ -26,19 +26,34 @@ SECRET_KEY = 'django-insecure-@f#xw_plnvual(zz%g7^+h)u*tpoj9aive27duzw+$lt(cuytq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# ALLOWED_HOSTS = [
+#     "0.0.0.0",
+#     'localhost',
+#     "13.203.77.44",
+#     'ec2-13-203-77-44.ap-south-1.compute.amazonaws.com',
+#     "13.232.2.78",
+#     'ec2-13-232-2-78.ap-south-1.compute.amazonaws.com',
+#     'http://bavascarwash.ashplus.online',
+#     'bavascarwash.ashplus.online',
+#     'ec2-65-1-134-172.ap-south-1.compute.amazonaws.com',
+#     '65.1.134.172',
+#     'ashplus.online', 'www.ashplus.online',
+#     "ec2-65-2-75-172.ap-south-1.compute.amazonaws.com",
+#     'localhost:8000', 'bavas-carwash-billing.netlify.app', '*'
+#     'ec2-15-206-90-190.ap-south-1.compute.amazonaws.com'
+# ]
+
 ALLOWED_HOSTS = [
     "0.0.0.0",
     'localhost',
-    "65.2.75.172",
+    "13.203.77.44",
+    'ec2-13-203-77-44.ap-south-1.compute.amazonaws.com',
     "13.232.2.78",
+    'ec2-13-232-2-78.ap-south-1.compute.amazonaws.com',
     'http://bavascarwash.ashplus.online',
     'bavascarwash.ashplus.online',
-    'ec2-65-1-134-172.ap-south-1.compute.amazonaws.com',
-    '65.1.134.172',
     'ashplus.online', 'www.ashplus.online',
-    "ec2-65-2-75-172.ap-south-1.compute.amazonaws.com",
-    'localhost:8000', 'bavas-carwash-billing.netlify.app', '*'
-    'ec2-15-206-90-190.ap-south-1.compute.amazonaws.com'
+    'bavas-carwash-billing.netlify.app', '*'
 ]
 
 
