@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
     'localhost',
     "65.2.75.172",
-    "15.206.90.190",
+    "13.232.2.78",
     'http://bavascarwash.ashplus.online',
     'bavascarwash.ashplus.online',
     'ec2-65-1-134-172.ap-south-1.compute.amazonaws.com',
