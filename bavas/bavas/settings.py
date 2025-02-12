@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
+    'localhost',
     "65.2.75.172",
     "15.206.90.190",
     'http://bavascarwash.ashplus.online',
