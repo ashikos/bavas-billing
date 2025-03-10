@@ -166,6 +166,7 @@ CORS_ALLOW_HEADERS = (
     'user-agent',
     'x-csrftoken',
     'x-requested-with',
+    'bearer'
 )
 
 ROOT_URLCONF = 'bavas.urls'
@@ -279,5 +280,10 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
 
 CELERY_RESULT_BACKEND = 'django-db'
+
+JWT_SECRET_KEY = "OH1>OUH]H*%&$5gsdkjlpl`;23de"
+
+AUTH_USER_MODEL = 'accounts.UserMaster'
+
 
 
